@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+
+# Virtual Environment
+venv/
+
+# Exports
+exports/*.csv
+exports/*.vcf
+exports/*.pdf
+exports/*.png
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+backup_*.db

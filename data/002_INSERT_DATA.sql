@@ -1,15 +1,15 @@
 INSERT INTO users (username, password_hash, role, nom, prenom, email) VALUES 
-('admin', 'hash_secure_123', 'Administrateur', 'Dupont', 'Jean', 'j.dupont@entreprise.fr'),
-('m.martin', 'hash_secure_456', 'Utilisateur', 'Martin', 'Marie', 'm.martin@entreprise.fr');
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Administrateur', 'Dupont', 'Jean', 'j.dupont@entreprise.fr'),
+('m.martin', 'd5c0b8b2c3e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2', 'Utilisateur', 'Martin', 'Marie', 'm.martin@entreprise.fr');
 
 INSERT INTO projets (nom, description, objectif, date_debut, date_fin_previsionnelle) VALUES 
 ('Refonte Site Web', 'Mise à jour du design et du backend', 'Améliorer le SEO', '2024-01-15', '2024-06-30'),
 ('Campagne Marketing Q1', 'Publicité sur les réseaux sociaux', 'Acquérir 100 clients', '2024-02-01', '2024-03-15');
 
-INSERT INTO contacts (civilite, nom, prenom, societe, poste, categorie, adresse_ville, adresse_pays) VALUES 
-('M.', 'Durand', 'Thomas', 'TechCorp', 'Directeur Technique', 'Client', 'Paris', 'France'),
-('Mme', 'Lefebvre', 'Julie', 'Design Studio', 'Graphiste', 'Partenaire', 'Lyon', 'France'),
-('M.', 'Smith', 'John', 'Global Inc', 'Acheteur', 'Prospect', 'Londres', 'UK');
+INSERT INTO contacts (civilite, nom, prenom, societe, poste, categorie, adresse_ville, adresse_pays, notes) VALUES 
+('M.', 'Durand', 'Thomas', 'TechCorp', 'Directeur Technique', 'Client', 'Paris', 'France', 'Client important dans le secteur technologique'),
+('Mme', 'Lefebvre', 'Julie', 'Design Studio', 'Graphiste', 'Partenaire', 'Lyon', 'France', 'Partenaire pour les projets de design'),
+('M.', 'Smith', 'John', 'Global Inc', 'Acheteur', 'Prospect', 'Londres', 'UK', 'Prospect potentiel pour services IT');
 
 INSERT INTO coordonnees (contact_id, type_coord, valeur, principal) VALUES 
 (1, 'Email Pro', 't.durand@techcorp.com', 1),
@@ -42,7 +42,7 @@ INSERT INTO rappels (contact_id, type_rappel, titre, date_heure, priorite) VALUE
 (3, 'Relance', 'Relancer John pour le devis', '2024-01-28 10:00:00', 'Moyenne');
 
 INSERT INTO relations (contact_source_id, contact_cible_id, type_relation) VALUES 
-(1, 2, 'Prestataire'); -- Thomas travaille avec Julie
+(1, 2, 'Prestataire');
 
 INSERT INTO taches (titre, description, priorite, statut, projet_id) VALUES 
 ('Maquette accueil', 'Valider le design de la page home', 'Haute', 'En cours', 1),

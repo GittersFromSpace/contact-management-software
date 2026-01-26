@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS contacts (
     adresse_code_postal TEXT,
     adresse_ville TEXT,
     adresse_pays TEXT,
+    notes TEXT,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_modification DATETIME
 );
