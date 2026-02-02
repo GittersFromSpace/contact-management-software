@@ -28,19 +28,29 @@ from modules.statistics_ui import StatisticsUI
 
 class LoginWindow:
     
-    def __init__(self, root, auth_manager, on_success):
+    def __init__(self, root, auth_manager, on_success, is_logout=False):
         self.root = root
         self.auth = auth_manager
         self.on_success = on_success
+        self.is_logout = is_logout
         
         self.window = tk.Toplevel(root)
         self.window.geometry("450x350")
         self.window.resizable(True, True)
+        self.window.title("Connexion")
         
-        self.window.transient(root)
+        if not is_logout:
+            self.window.transient(root)
+        
         self.window.grab_set()
+        self.window.protocol("WM_DELETE_WINDOW", self.on_close)
         
         self.create_widgets()
+    
+    def on_close(self):
+        self.window.destroy()
+        if self.is_logout or self.root.state() == 'withdrawn':
+            self.root.quit()
     
     def create_widgets(self):
         main_frame = ttk.Frame(self.window, padding="20")
@@ -201,8 +211,12 @@ class MainApplication:
     def logout(self):
         if messagebox.askyesno("Déconnexion", "Voulez-vous vraiment vous déconnecter ?"):
             self.auth.logout()
+            
+            for widget in self.root.winfo_children():
+                widget.destroy()
+            
             self.root.withdraw()
-            LoginWindow(self.root, self.auth, self.on_login_success)
+            self.login_window = LoginWindow(self.root, self.auth, self.on_login_success, is_logout=True)
     
     def show_about(self):
         messagebox.showinfo(
