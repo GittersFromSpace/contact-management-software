@@ -47,12 +47,13 @@ class LoginWindow:
         main_frame.pack(fill=tk.BOTH, expand=True)
         
         ttk.Label(main_frame, text="Nom d'utilisateur:").pack(anchor=tk.W, pady=(10, 5))
-        self.username_var = tk.StringVar(value="admin")
+        self.username_var = tk.StringVar()
         username_entry = ttk.Entry(main_frame, textvariable=self.username_var, width=30)
         username_entry.pack(fill=tk.X, pady=(0, 10))
+        username_entry.focus()
         
         ttk.Label(main_frame, text="Mot de passe:").pack(anchor=tk.W, pady=(10, 5))
-        self.password_var = tk.StringVar(value="admin")
+        self.password_var = tk.StringVar()
         password_entry = ttk.Entry(main_frame, textvariable=self.password_var, show="*", width=30)
         password_entry.pack(fill=tk.X, pady=(0, 20))
         
@@ -72,14 +73,6 @@ class LoginWindow:
             text="Quitter",
             command=self.root.quit
         ).pack(side=tk.LEFT, expand=True)
-        
-        info_label = ttk.Label(
-            main_frame,
-            text="Identifiants par défaut: admin / admin",
-            font=("", 8, "italic"),
-            foreground="gray"
-        )
-        info_label.pack(pady=(10, 0))
     
     def login(self):
         username = self.username_var.get()
