@@ -35,6 +35,15 @@ COLORS = {
     'info': '#3b82f6',
 }
 
+FONTS = {
+    'base': ('Segoe UI', 11),
+    'small': ('Segoe UI', 10),
+    'large': ('Segoe UI', 12),
+    'title': ('Segoe UI', 18, 'bold'),
+    'subtitle': ('Segoe UI', 13, 'bold'),
+    'heading': ('Segoe UI', 11, 'bold'),
+}
+
 
 def configure_styles(root):
     """Configure les styles globaux de l'application"""
@@ -49,19 +58,19 @@ def configure_styles(root):
     
     default_font = tkfont.nametofont("TkDefaultFont")
     font_height = default_font.metrics("linespace")
-    rowheight = font_height + 8
+    rowheight = max(font_height + 12, 28)
     
     style.configure("Treeview", 
                    rowheight=rowheight,
-                   font=("", 10),
+                   font=FONTS['base'],
                    background=COLORS['bg_primary'],
                    foreground=COLORS['text_primary'],
                    fieldbackground=COLORS['bg_primary'],
                    borderwidth=0)
     
     style.configure("Treeview.Heading",
-                   font=("", 10, "bold"),
-                   padding=5,
+                   font=FONTS['heading'],
+                   padding=8,
                    background=COLORS['primary'],
                    foreground=COLORS['text_white'],
                    relief="flat")
@@ -74,8 +83,8 @@ def configure_styles(root):
              foreground=[('selected', COLORS['text_white'])])
     
     style.configure("TButton",
-                   padding=6,
-                   font=("", 10),
+                   padding=(12, 8),
+                   font=FONTS['base'],
                    background=COLORS['secondary'],
                    foreground=COLORS['text_primary'],
                    borderwidth=1,
@@ -87,8 +96,8 @@ def configure_styles(root):
              relief=[('pressed', 'flat')])
     
     style.configure("Accent.TButton",
-                   padding=8,
-                   font=("", 10, "bold"),
+                   padding=(14, 10),
+                   font=FONTS['heading'],
                    background=COLORS['primary'],
                    foreground=COLORS['text_white'],
                    borderwidth=0,
@@ -100,8 +109,8 @@ def configure_styles(root):
              relief=[('pressed', 'flat')])
     
     style.configure("Success.TButton",
-                   padding=6,
-                   font=("", 10),
+                   padding=(12, 8),
+                   font=FONTS['base'],
                    background=COLORS['success'],
                    foreground=COLORS['text_white'],
                    borderwidth=0,
@@ -112,8 +121,8 @@ def configure_styles(root):
                         ('pressed', COLORS['success'])])
     
     style.configure("Danger.TButton",
-                   padding=6,
-                   font=("", 10),
+                   padding=(12, 8),
+                   font=FONTS['base'],
                    background=COLORS['error'],
                    foreground=COLORS['text_white'],
                    borderwidth=0,
@@ -124,22 +133,22 @@ def configure_styles(root):
                         ('pressed', COLORS['error'])])
     
     style.configure("TLabel",
-                   font=("", 10),
+                   font=FONTS['base'],
                    background=COLORS['bg_secondary'],
                    foreground=COLORS['text_primary'])
     
     style.configure("Title.TLabel",
-                   font=("", 14, "bold"),
+                   font=FONTS['title'],
                    background=COLORS['bg_secondary'],
                    foreground=COLORS['text_primary'])
     
     style.configure("Subtitle.TLabel",
-                   font=("", 11),
+                   font=FONTS['subtitle'],
                    background=COLORS['bg_secondary'],
                    foreground=COLORS['text_secondary'])
     
     style.configure("Info.TLabel",
-                   font=("", 9),
+                   font=FONTS['small'],
                    background=COLORS['bg_secondary'],
                    foreground=COLORS['text_light'])
     
@@ -159,11 +168,12 @@ def configure_styles(root):
                    bordercolor=COLORS['border'])
     
     style.configure("TLabelframe.Label",
-                   font=("", 10, "bold"),
+                   font=FONTS['heading'],
                    background=COLORS['bg_secondary'],
                    foreground=COLORS['primary'])
     
     style.configure("TEntry",
+                   font=FONTS['base'],
                    fieldbackground=COLORS['bg_primary'],
                    foreground=COLORS['text_primary'],
                    bordercolor=COLORS['border'],
@@ -177,6 +187,7 @@ def configure_styles(root):
              lightcolor=[('focus', COLORS['border_focus'])])
     
     style.configure("TCombobox",
+                   font=FONTS['base'],
                    fieldbackground=COLORS['bg_primary'],
                    background=COLORS['bg_primary'],
                    foreground=COLORS['text_primary'],
@@ -194,8 +205,8 @@ def configure_styles(root):
                    borderwidth=0)
     
     style.configure("TNotebook.Tab",
-                   padding=[15, 8],
-                   font=("", 10),
+                   padding=[18, 10],
+                   font=FONTS['base'],
                    background=COLORS['bg_tertiary'],
                    foreground=COLORS['text_secondary'])
     
@@ -212,6 +223,13 @@ def configure_styles(root):
     
     style.map("TScrollbar",
              background=[('active', COLORS['secondary'])])
+    
+    style.configure("TText",
+                   font=FONTS['base'],
+                   background=COLORS['bg_primary'],
+                   foreground=COLORS['text_primary'],
+                   borderwidth=1,
+                   relief="solid")
 
 
 def create_centered_frame(parent, padding="20"):
