@@ -12,14 +12,14 @@ class InteractionUI:
     
     def create_interactions_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="💬 Interactions")
+        notebook.add(tab, text="Interactions")
 
         ttk.Label(tab, text="Gestion des Interactions", style="Title.TLabel").pack(pady=(0, 15))
 
         btn_frame = ttk.Frame(tab)
         btn_frame.pack(fill=tk.X, pady=(0, 10))
 
-        ttk.Button(btn_frame, text="➕ Nouvelle interaction", command=self.add_interaction).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Nouvelle interaction", command=self.add_interaction, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
 
         list_frame = ttk.Frame(tab)
         list_frame.pack(fill=tk.BOTH, expand=True)

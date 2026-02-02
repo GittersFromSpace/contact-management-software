@@ -24,7 +24,7 @@ class TagRelationUI:
     
     def create_tags_relations_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="🏷 Tags & Relations")
+        notebook.add(tab, text="Tags & Relations")
         
         ttk.Label(tab, text="Tags et Relations", style="Title.TLabel").pack(pady=(0, 15))
         
@@ -37,9 +37,9 @@ class TagRelationUI:
         btn_tags_frame = ttk.Frame(tags_frame)
         btn_tags_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Button(btn_tags_frame, text="➕ Nouveau tag", command=self.add_tag).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_tags_frame, text="🗑 Supprimer tag", command=self.delete_tag).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_tags_frame, text="🏷 Assigner à contact", command=self.assign_tag_to_contact).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_tags_frame, text="Nouveau tag", command=self.add_tag, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_tags_frame, text="Supprimer tag", command=self.delete_tag, style="Danger.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_tags_frame, text="Assigner à contact", command=self.assign_tag_to_contact).pack(side=tk.LEFT, padx=5)
         
         tags_list_frame = ttk.Frame(tags_frame)
         tags_list_frame.pack(fill=tk.BOTH, expand=True)
@@ -121,7 +121,7 @@ class TagRelationUI:
         relations_list_frame.columnconfigure(0, weight=1)
         relations_list_frame.rowconfigure(0, weight=1)
         
-        search_frame = ttk.LabelFrame(tab, text="🔍 Recherche par Tags (combinaison)", padding="10")
+        search_frame = ttk.LabelFrame(tab, text="Recherche par Tags", padding="10")
         search_frame.pack(fill=tk.X, pady=(10, 0))
         
         search_top_frame = ttk.Frame(search_frame)
@@ -133,7 +133,7 @@ class TagRelationUI:
         ttk.Radiobutton(search_top_frame, text="ET (tous les tags)", variable=self.operator_var, value="ET").pack(side=tk.LEFT, padx=10)
         ttk.Radiobutton(search_top_frame, text="OU (au moins un tag)", variable=self.operator_var, value="OU").pack(side=tk.LEFT, padx=10)
         
-        ttk.Button(search_top_frame, text="🔍 Rechercher", command=self.search_by_tags).pack(side=tk.LEFT, padx=10)
+        ttk.Button(search_top_frame, text="Rechercher", command=self.search_by_tags, style="Accent.TButton").pack(side=tk.LEFT, padx=10)
         
         tags_select_frame = ttk.Frame(search_frame)
         tags_select_frame.pack(fill=tk.X)

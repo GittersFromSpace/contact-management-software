@@ -11,7 +11,7 @@ class DashboardUI:
     
     def create_dashboard_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="📊 Tableau de bord")
+        notebook.add(tab, text="Tableau de bord")
         
         ttk.Label(tab, text="Tableau de bord", style="Title.TLabel", font=("", 16, "bold")).pack(pady=(0, 20))
         

@@ -12,15 +12,15 @@ class RappelUI:
     
     def create_rappels_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="🔔 Rappels")
+        notebook.add(tab, text="Rappels")
 
         ttk.Label(tab, text="Gestion des Rappels", style="Title.TLabel").pack(pady=(0, 15))
 
         btn_frame = ttk.Frame(tab)
         btn_frame.pack(fill=tk.X, pady=(0, 10))
 
-        ttk.Button(btn_frame, text="➕ Nouveau rappel", command=self.add_rappel).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="✓ Marquer traité", command=self.mark_rappel_done).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Nouveau rappel", command=self.add_rappel, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Marquer traité", command=self.mark_rappel_done, style="Success.TButton").pack(side=tk.LEFT, padx=5)
 
         list_frame = ttk.Frame(tab)
         list_frame.pack(fill=tk.BOTH, expand=True)

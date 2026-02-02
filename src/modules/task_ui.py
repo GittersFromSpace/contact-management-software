@@ -12,14 +12,14 @@ class TaskUI:
     
     def create_tasks_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="☑ Tâches")
+        notebook.add(tab, text="Tâches")
 
         ttk.Label(tab, text="Gestion des Tâches", style="Title.TLabel").pack(pady=(0, 15))
 
         btn_frame = ttk.Frame(tab)
         btn_frame.pack(fill=tk.X, pady=(0, 10))
 
-        ttk.Button(btn_frame, text="➕ Nouvelle tâche", command=self.add_task).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Nouvelle tâche", command=self.add_task, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
 
         list_frame = ttk.Frame(tab)
         list_frame.pack(fill=tk.BOTH, expand=True)

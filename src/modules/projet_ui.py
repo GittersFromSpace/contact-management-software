@@ -14,16 +14,16 @@ class ProjetUI:
     
     def create_projets_tab(self, notebook):
         tab = ttk.Frame(notebook, padding="15")
-        notebook.add(tab, text="📁 Projets")
+        notebook.add(tab, text="Projets")
         
         ttk.Label(tab, text="Gestion des Projets", style="Title.TLabel").pack(pady=(0, 15))
         
         btn_frame = ttk.Frame(tab)
         btn_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Button(btn_frame, text="➕ Nouveau projet", command=self.add_projet).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="📊 Voir détails", command=self.show_projet_details).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="🗑 Supprimer", command=self.delete_projet).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Nouveau projet", command=self.add_projet, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Voir détails", command=self.show_projet_details).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Supprimer", command=self.delete_projet, style="Danger.TButton").pack(side=tk.LEFT, padx=5)
         
         filter_frame = ttk.LabelFrame(tab, text="Filtres", padding="10")
         filter_frame.pack(fill=tk.X, pady=(0, 10))
@@ -316,8 +316,8 @@ class ProjetUI:
         btn_tasks_frame = ttk.Frame(tasks_frame)
         btn_tasks_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Button(btn_tasks_frame, text="➕ Ajouter tâche existante", command=lambda: self.add_task_to_projet(projet_id, win)).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_tasks_frame, text="❌ Retirer tâche", command=lambda: self.remove_task_from_projet(projet_id, tasks_tree, win)).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_tasks_frame, text="Ajouter tâche", command=lambda: self.add_task_to_projet(projet_id, win), style="Accent.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_tasks_frame, text="Retirer tâche", command=lambda: self.remove_task_from_projet(projet_id, tasks_tree, win), style="Danger.TButton").pack(side=tk.LEFT, padx=5)
         
         tasks_list_frame = ttk.Frame(tasks_frame)
         tasks_list_frame.pack(fill=tk.BOTH, expand=True)

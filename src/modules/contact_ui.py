@@ -29,8 +29,8 @@ class ContactUI:
         search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=40)
         search_entry.grid(row=0, column=1, padx=5, sticky=(tk.W, tk.E))
         
-        ttk.Button(search_frame, text="🔍 Rechercher", command=self.search_contacts).grid(row=0, column=2, padx=5)
-        ttk.Button(search_frame, text="↻ Réinitialiser", command=self.reset_search).grid(row=0, column=3, padx=5)
+        ttk.Button(search_frame, text="Rechercher", command=self.search_contacts, style="Accent.TButton").grid(row=0, column=2, padx=5)
+        ttk.Button(search_frame, text="Réinitialiser", command=self.reset_search).grid(row=0, column=3, padx=5)
         
         
         ttk.Label(search_frame, text="Catégorie:").grid(row=1, column=0, sticky=tk.W, pady=(5, 0))
@@ -47,10 +47,10 @@ class ContactUI:
         button_frame = ttk.Frame(main_frame)
         button_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
         
-        ttk.Button(button_frame, text="➕ Nouveau contact", command=self.open_add_contact_window).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="👁 Voir détails", command=self.view_contact_details).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="✏ Modifier", command=self.edit_contact).pack(side=tk.LEFT, padx=5)
-        ttk.Button(button_frame, text="🗑 Supprimer", command=self.delete_contact).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Nouveau contact", command=self.open_add_contact_window, style="Accent.TButton").pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Voir détails", command=self.view_contact_details).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Modifier", command=self.edit_contact).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Supprimer", command=self.delete_contact, style="Danger.TButton").pack(side=tk.LEFT, padx=5)
         
         
         list_frame = ttk.Frame(main_frame)

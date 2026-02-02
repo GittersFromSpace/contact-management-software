@@ -185,7 +185,7 @@ class MainApplication:
         header = ttk.Frame(main_container, relief=tk.FLAT)
         header.pack(fill=tk.X, padx=10, pady=(5, 0))
         
-        user_info = f"👤 Connecté: {self.current_user['prenom']} {self.current_user['nom']} • Rôle: {self.current_user['role']}"
+        user_info = f"Connecté: {self.current_user['prenom']} {self.current_user['nom']} | Rôle: {self.current_user['role']}"
         ttk.Label(header, text=user_info, font=("", 11, "bold"), foreground="#2c3e50").pack(side=tk.LEFT, padx=10, pady=8)
         
         # Notebook principal avec meilleure mise en page
@@ -195,7 +195,7 @@ class MainApplication:
         self.dashboard_ui.create_dashboard_tab(self.notebook)
         
         contact_tab = ttk.Frame(self.notebook)
-        self.notebook.add(contact_tab, text="👥 Contacts")
+        self.notebook.add(contact_tab, text="Contacts")
         contact_ui = ContactUI(self.root, self.contact_mgr, self.auth)
         contact_ui.create_main_interface(contact_tab)
         
