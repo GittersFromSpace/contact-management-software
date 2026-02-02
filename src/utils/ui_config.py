@@ -3,57 +3,215 @@ from tkinter import ttk
 import tkinter.font as tkfont
 
 
+COLORS = {
+    'primary': '#2563eb',
+    'primary_dark': '#1e40af',
+    'primary_light': '#3b82f6',
+    
+    'secondary': '#64748b',
+    'secondary_dark': '#475569',
+    'secondary_light': '#94a3b8',
+    
+    'accent': '#10b981',
+    'accent_warning': '#f59e0b',
+    'accent_danger': '#ef4444',
+    
+    'bg_primary': '#ffffff',
+    'bg_secondary': '#f8fafc',
+    'bg_tertiary': '#e2e8f0',
+    'bg_dark': '#1e293b',
+    
+    'text_primary': '#0f172a',
+    'text_secondary': '#475569',
+    'text_light': '#94a3b8',
+    'text_white': '#ffffff',
+    
+    'border': '#cbd5e1',
+    'border_focus': '#2563eb',
+    
+    'success': '#10b981',
+    'warning': '#f59e0b',
+    'error': '#ef4444',
+    'info': '#3b82f6',
+}
+
+
 def configure_styles(root):
     """Configure les styles globaux de l'application"""
     style = ttk.Style(root)
     
-    # Définir le thème de base
     try:
-        style.theme_use('clam')  # Thème moderne
+        style.theme_use('clam')
     except:
         pass
     
-    # Configuration du Treeview pour éviter le texte coupé
-    # Calculer la hauteur de ligne appropriée
+    root.configure(bg=COLORS['bg_secondary'])
+    
     default_font = tkfont.nametofont("TkDefaultFont")
     font_height = default_font.metrics("linespace")
-    rowheight = font_height + 8  # Ajouter de l'espace pour le padding
+    rowheight = font_height + 8
     
     style.configure("Treeview", 
                    rowheight=rowheight,
-                   font=("", 10))
+                   font=("", 10),
+                   background=COLORS['bg_primary'],
+                   foreground=COLORS['text_primary'],
+                   fieldbackground=COLORS['bg_primary'],
+                   borderwidth=0)
     
     style.configure("Treeview.Heading",
                    font=("", 10, "bold"),
-                   padding=5)
+                   padding=5,
+                   background=COLORS['primary'],
+                   foreground=COLORS['text_white'],
+                   relief="flat")
     
-    # Style pour les boutons
+    style.map("Treeview.Heading",
+             background=[('active', COLORS['primary_dark'])])
+    
+    style.map("Treeview",
+             background=[('selected', COLORS['primary_light'])],
+             foreground=[('selected', COLORS['text_white'])])
+    
     style.configure("TButton",
                    padding=6,
-                   font=("", 10))
+                   font=("", 10),
+                   background=COLORS['secondary'],
+                   foreground=COLORS['text_primary'],
+                   borderwidth=1,
+                   relief="flat")
+    
+    style.map("TButton",
+             background=[('active', COLORS['secondary_dark']),
+                        ('pressed', COLORS['secondary'])],
+             relief=[('pressed', 'flat')])
     
     style.configure("Accent.TButton",
                    padding=8,
-                   font=("", 10, "bold"))
+                   font=("", 10, "bold"),
+                   background=COLORS['primary'],
+                   foreground=COLORS['text_white'],
+                   borderwidth=0,
+                   relief="flat")
     
-    # Style pour les labels
+    style.map("Accent.TButton",
+             background=[('active', COLORS['primary_dark']),
+                        ('pressed', COLORS['primary'])],
+             relief=[('pressed', 'flat')])
+    
+    style.configure("Success.TButton",
+                   padding=6,
+                   font=("", 10),
+                   background=COLORS['success'],
+                   foreground=COLORS['text_white'],
+                   borderwidth=0,
+                   relief="flat")
+    
+    style.map("Success.TButton",
+             background=[('active', '#059669'),
+                        ('pressed', COLORS['success'])])
+    
+    style.configure("Danger.TButton",
+                   padding=6,
+                   font=("", 10),
+                   background=COLORS['error'],
+                   foreground=COLORS['text_white'],
+                   borderwidth=0,
+                   relief="flat")
+    
+    style.map("Danger.TButton",
+             background=[('active', '#dc2626'),
+                        ('pressed', COLORS['error'])])
+    
     style.configure("TLabel",
-                   font=("", 10))
+                   font=("", 10),
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['text_primary'])
     
     style.configure("Title.TLabel",
-                   font=("", 14, "bold"))
+                   font=("", 14, "bold"),
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['text_primary'])
     
-    # Style pour les frames
+    style.configure("Subtitle.TLabel",
+                   font=("", 11),
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['text_secondary'])
+    
+    style.configure("Info.TLabel",
+                   font=("", 9),
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['text_light'])
+    
     style.configure("TFrame",
-                   background="#f0f0f0")
+                   background=COLORS['bg_secondary'])
     
-    # Style pour le notebook (tabs)
+    style.configure("Card.TFrame",
+                   background=COLORS['bg_primary'],
+                   relief="solid",
+                   borderwidth=1)
+    
+    style.configure("TLabelframe",
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['text_primary'],
+                   borderwidth=2,
+                   relief="solid",
+                   bordercolor=COLORS['border'])
+    
+    style.configure("TLabelframe.Label",
+                   font=("", 10, "bold"),
+                   background=COLORS['bg_secondary'],
+                   foreground=COLORS['primary'])
+    
+    style.configure("TEntry",
+                   fieldbackground=COLORS['bg_primary'],
+                   foreground=COLORS['text_primary'],
+                   bordercolor=COLORS['border'],
+                   lightcolor=COLORS['border_focus'],
+                   darkcolor=COLORS['border'],
+                   borderwidth=1,
+                   relief="solid")
+    
+    style.map("TEntry",
+             bordercolor=[('focus', COLORS['border_focus'])],
+             lightcolor=[('focus', COLORS['border_focus'])])
+    
+    style.configure("TCombobox",
+                   fieldbackground=COLORS['bg_primary'],
+                   background=COLORS['bg_primary'],
+                   foreground=COLORS['text_primary'],
+                   bordercolor=COLORS['border'],
+                   arrowcolor=COLORS['secondary'],
+                   borderwidth=1)
+    
+    style.map("TCombobox",
+             fieldbackground=[('readonly', COLORS['bg_primary'])],
+             selectbackground=[('readonly', COLORS['bg_primary'])],
+             bordercolor=[('focus', COLORS['border_focus'])])
+    
     style.configure("TNotebook",
-                   padding=5)
+                   background=COLORS['bg_secondary'],
+                   borderwidth=0)
     
     style.configure("TNotebook.Tab",
                    padding=[15, 8],
-                   font=("", 10))
+                   font=("", 10),
+                   background=COLORS['bg_tertiary'],
+                   foreground=COLORS['text_secondary'])
+    
+    style.map("TNotebook.Tab",
+             background=[('selected', COLORS['bg_primary']),
+                        ('active', COLORS['bg_secondary'])],
+             foreground=[('selected', COLORS['primary'])])
+    
+    style.configure("TScrollbar",
+                   background=COLORS['bg_tertiary'],
+                   troughcolor=COLORS['bg_secondary'],
+                   borderwidth=0,
+                   arrowcolor=COLORS['secondary'])
+    
+    style.map("TScrollbar",
+             background=[('active', COLORS['secondary'])])
 
 
 def create_centered_frame(parent, padding="20"):
