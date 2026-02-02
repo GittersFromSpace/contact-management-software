@@ -129,7 +129,7 @@ class RappelUI:
         btn.grid(row=9, column=0, pady=(18, 0), sticky="ew")
     
     def mark_rappel_done(self):
-        messagebox.showinfo("Info", "Fonctionnalité en développement", parent=self.parent)
+        messagebox.showinfo("Info", "Fonctionnalité en développement", parent=self.root)
     
     def load_rappels(self):
         if not self.rappels_tree:

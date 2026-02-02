@@ -221,14 +221,14 @@ class TagRelationUI:
     def delete_tag(self):
         selected = self.tags_tree.selection()
         if not selected:
-            messagebox.showwarning("Attention", "Veuillez sélectionner un tag à supprimer", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez sélectionner un tag à supprimer", parent=self.root)
             return
         
         item = self.tags_tree.item(selected[0])
         tag_id = item['values'][0]
         tag_nom = item['values'][1]
         
-        if messagebox.askyesno("Confirmation", f"Voulez-vous vraiment supprimer le tag '{tag_nom}' ?\nIl sera retiré de tous les contacts.", parent=self.parent):
+        if messagebox.askyesno("Confirmation", f"Voulez-vous vraiment supprimer le tag '{tag_nom}' ?\nIl sera retiré de tous les contacts.", parent=self.root):
             success = self.tag_mgr.delete_tag(tag_id)
             if success:
                 messagebox.showinfo("Succès", "Tag supprimé")
@@ -239,7 +239,7 @@ class TagRelationUI:
     def assign_tag_to_contact(self):
         selected = self.tags_tree.selection()
         if not selected:
-            messagebox.showwarning("Attention", "Veuillez d'abord sélectionner un tag", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez d'abord sélectionner un tag", parent=self.root)
             return
         
         item = self.tags_tree.item(selected[0])
@@ -304,7 +304,7 @@ class TagRelationUI:
     def search_by_tags(self):
         selected_indices = self.tag_filter_listbox.curselection()
         if not selected_indices:
-            messagebox.showwarning("Attention", "Veuillez sélectionner au moins un tag", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez sélectionner au moins un tag", parent=self.root)
             return
         
         tag_ids = []
@@ -394,13 +394,13 @@ class TagRelationUI:
     def delete_relation(self):
         selected = self.relations_tree.selection()
         if not selected:
-            messagebox.showwarning("Attention", "Veuillez sélectionner une relation à supprimer", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez sélectionner une relation à supprimer", parent=self.root)
             return
         
         item = self.relations_tree.item(selected[0])
         relation_id = item['values'][0]
         
-        if messagebox.askyesno("Confirmation", "Voulez-vous vraiment supprimer cette relation ?", parent=self.parent):
+        if messagebox.askyesno("Confirmation", "Voulez-vous vraiment supprimer cette relation ?", parent=self.root):
             success = self.relation_mgr.delete_relation(relation_id)
             if success:
                 messagebox.showinfo("Succès", "Relation supprimée")
@@ -462,7 +462,7 @@ class TagRelationUI:
     
     def show_graph_view(self):
         if not MATPLOTLIB_AVAILABLE:
-            messagebox.showerror("Erreur", "Matplotlib n'est pas installé", parent=self.parent)
+            messagebox.showerror("Erreur", "Matplotlib n'est pas installé", parent=self.root)
             return
         
         relations = self.relation_mgr.get_all_relations()

@@ -214,14 +214,14 @@ class ProjetUI:
     def delete_projet(self):
         selected = self.projets_tree.selection()
         if not selected:
-            messagebox.showwarning("Attention", "Veuillez sélectionner un projet à supprimer", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez sélectionner un projet à supprimer", parent=self.root)
             return
         
         item = self.projets_tree.item(selected[0])
         projet_id = item['values'][0]
         projet_nom = item['values'][1]
         
-        if messagebox.askyesno("Confirmation", f"Voulez-vous vraiment supprimer le projet '{projet_nom}' ?", parent=self.parent):
+        if messagebox.askyesno("Confirmation", f"Voulez-vous vraiment supprimer le projet '{projet_nom}' ?", parent=self.root):
             success = self.projet_mgr.delete_projet(projet_id)
             if success:
                 messagebox.showinfo("Succès", "Projet supprimé")
@@ -232,7 +232,7 @@ class ProjetUI:
     def show_projet_details(self):
         selected = self.projets_tree.selection()
         if not selected:
-            messagebox.showwarning("Attention", "Veuillez sélectionner un projet", parent=self.parent)
+            messagebox.showwarning("Attention", "Veuillez sélectionner un projet", parent=self.root)
             return
         
         item = self.projets_tree.item(selected[0])
@@ -243,7 +243,7 @@ class ProjetUI:
     def open_projet_detail_window(self, projet_id):
         projet = self.projet_mgr.get_projet_by_id(projet_id)
         if not projet:
-            messagebox.showerror("Erreur", "Projet introuvable", parent=self.parent)
+            messagebox.showerror("Erreur", "Projet introuvable", parent=self.root)
             return
         
         win = tk.Toplevel(self.root)
@@ -377,7 +377,7 @@ class ProjetUI:
     
     def add_task_to_projet(self, projet_id, parent_win):
         if not self.task_mgr:
-            messagebox.showwarning("Attention", "Gestionnaire de tâches non disponible", parent=self.parent)
+            messagebox.showwarning("Attention", "Gestionnaire de tâches non disponible", parent=self.root)
             return
         
         all_tasks = self.task_mgr.get_tasks()
@@ -387,7 +387,7 @@ class ProjetUI:
         available_tasks = [t for t in all_tasks if t['id'] not in projet_task_ids]
         
         if not available_tasks:
-            messagebox.showinfo("Info", "Aucune tâche disponible à ajouter", parent=self.parent)
+            messagebox.showinfo("Info", "Aucune tâche disponible à ajouter", parent=self.root)
             return
         
         win = tk.Toplevel(parent_win)
