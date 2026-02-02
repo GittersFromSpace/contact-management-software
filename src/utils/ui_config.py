@@ -232,6 +232,12 @@ def configure_styles(root):
                    relief="solid")
 
 
+def configure_treeview_tags(treeview):
+    """Configure alternating row colors for a treeview"""
+    treeview.tag_configure('oddrow', background=COLORS['bg_primary'])
+    treeview.tag_configure('evenrow', background=COLORS['bg_secondary'])
+
+
 def create_centered_frame(parent, padding="20"):
     """Crée un frame centré qui s'adapte au redimensionnement"""
     # Frame principal qui remplit tout l'espace
