@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 from datetime import datetime
 import webbrowser
-from utils.ui_config import configure_treeview_tags
+
 
 
 class ContactUI:
@@ -95,8 +95,6 @@ class ContactUI:
         vsb.grid(row=0, column=1, sticky=(tk.N, tk.S))
         hsb.grid(row=1, column=0, sticky=(tk.W, tk.E))
         
-        configure_treeview_tags(self.contacts_tree)
-        
         self.contacts_tree.bind("<Double-1>", lambda e: self.view_contact_details())
         
         
@@ -121,8 +119,7 @@ class ContactUI:
             contacts = self.contact_mgr.get_all_contacts()
         
         if contacts:
-            for idx, contact in enumerate(contacts):
-                tag = 'evenrow' if idx % 2 == 0 else 'oddrow'
+            for contact in contacts:
                 self.contacts_tree.insert("", "end", values=(
                     contact['id'],
                     contact['nom'] or '',
@@ -131,7 +128,7 @@ class ContactUI:
                     contact['poste'] or '',
                     contact['adresse_ville'] or '',
                     contact['categorie'] or ''
-                ), tags=(tag,))
+                ))
     
     def load_filter_options(self):
         

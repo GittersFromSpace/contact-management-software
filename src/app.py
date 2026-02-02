@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from utils.database_manager import DatabaseManager
 from utils.auth_manager import AuthManager
-from utils.ui_config import configure_styles
+from utils.ui_config import configure_styles, load_theme_preference, get_current_theme, set_theme, apply_theme, COLORS
 from modules.contact_manager import ContactManager
 from modules.contact_ui import ContactUI
 from modules.interaction_manager import InteractionManager, RappelManager
@@ -109,10 +109,10 @@ class MainApplication:
         self.root.geometry("1400x900")
         self.root.minsize(1000, 600)
         
-        # Configurer les styles globaux
+        self.db = DatabaseManager()
+        load_theme_preference(self.db)
         configure_styles(self.root)
         
-        self.db = DatabaseManager()
         self.auth = AuthManager(self.db)
         
         LoginWindow(self.root, self.auth, self.on_login_success)
@@ -171,7 +171,13 @@ class MainApplication:
         stats_menu.add_command(label="Générer des graphiques", command=self.statistics_ui.generate_charts)
         stats_menu.add_command(label="Exporter statistiques CSV", command=self.statistics_ui.export_statistics)
         
-        # Menu Utilisateurs (si permissions)
+        view_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Affichage", menu=view_menu)
+        
+        self.theme_var = tk.StringVar(value=get_current_theme())
+        view_menu.add_radiobutton(label="Thème clair", variable=self.theme_var, value="light", command=self.toggle_theme)
+        view_menu.add_radiobutton(label="Thème sombre", variable=self.theme_var, value="dark", command=self.toggle_theme)
+        
         if self.auth.has_permission('create_user'):
             users_menu = tk.Menu(menubar, tearoff=0)
             menubar.add_cascade(label="Utilisateurs", menu=users_menu)
@@ -189,7 +195,7 @@ class MainApplication:
         header.pack(fill=tk.X, padx=10, pady=(5, 0))
         
         user_info = f"Connecté: {self.current_user['prenom']} {self.current_user['nom']} | Rôle: {self.current_user['role']}"
-        ttk.Label(header, text=user_info, font=("", 11, "bold"), foreground="#2c3e50").pack(side=tk.LEFT, padx=10, pady=8)
+        ttk.Label(header, text=user_info, font=("", 11, "bold")).pack(side=tk.LEFT, padx=10, pady=8)
         
         # Notebook principal avec meilleure mise en page
         self.notebook = ttk.Notebook(main_container)
@@ -207,6 +213,11 @@ class MainApplication:
         self.task_ui.create_tasks_tab(self.notebook)
         self.tag_relation_ui.create_tags_relations_tab(self.notebook)
         self.projet_ui.create_projets_tab(self.notebook)
+    
+    def toggle_theme(self):
+        theme = self.theme_var.get()
+        if set_theme(self.db, theme):
+            apply_theme(self.root)
     
     def logout(self):
         if messagebox.askyesno("Déconnexion", "Voulez-vous vraiment vous déconnecter ?"):

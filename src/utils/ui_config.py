@@ -3,36 +3,69 @@ from tkinter import ttk
 import tkinter.font as tkfont
 
 
-COLORS = {
-    'primary': '#2563eb',
-    'primary_dark': '#1e40af',
-    'primary_light': '#3b82f6',
-    
-    'secondary': '#64748b',
-    'secondary_dark': '#475569',
-    'secondary_light': '#94a3b8',
-    
-    'accent': '#10b981',
-    'accent_warning': '#f59e0b',
-    'accent_danger': '#ef4444',
-    
-    'bg_primary': '#ffffff',
-    'bg_secondary': '#f8fafc',
-    'bg_tertiary': '#e2e8f0',
-    'bg_dark': '#1e293b',
-    
-    'text_primary': '#0f172a',
-    'text_secondary': '#475569',
-    'text_light': '#94a3b8',
-    'text_white': '#ffffff',
-    
-    'border': '#cbd5e1',
-    'border_focus': '#2563eb',
-    
-    'success': '#10b981',
-    'warning': '#f59e0b',
-    'error': '#ef4444',
-    'info': '#3b82f6',
+THEMES = {
+    'light': {
+        'primary': '#2563eb',
+        'primary_dark': '#1e40af',
+        'primary_light': '#3b82f6',
+        
+        'secondary': '#64748b',
+        'secondary_dark': '#475569',
+        'secondary_light': '#94a3b8',
+        
+        'accent': '#10b981',
+        'accent_warning': '#f59e0b',
+        'accent_danger': '#ef4444',
+        
+        'bg_primary': '#ffffff',
+        'bg_secondary': '#f8fafc',
+        'bg_tertiary': '#e2e8f0',
+        'bg_dark': '#1e293b',
+        
+        'text_primary': '#0f172a',
+        'text_secondary': '#475569',
+        'text_light': '#94a3b8',
+        'text_white': '#ffffff',
+        
+        'border': '#cbd5e1',
+        'border_focus': '#2563eb',
+        
+        'success': '#10b981',
+        'warning': '#f59e0b',
+        'error': '#ef4444',
+        'info': '#3b82f6',
+    },
+    'dark': {
+        'primary': '#60a5fa',
+        'primary_dark': '#3b82f6',
+        'primary_light': '#93c5fd',
+        
+        'secondary': '#94a3b8',
+        'secondary_dark': '#cbd5e1',
+        'secondary_light': '#64748b',
+        
+        'accent': '#34d399',
+        'accent_warning': '#fbbf24',
+        'accent_danger': '#f87171',
+        
+        'bg_primary': '#1e293b',
+        'bg_secondary': '#0f172a',
+        'bg_tertiary': '#334155',
+        'bg_dark': '#020617',
+        
+        'text_primary': '#f1f5f9',
+        'text_secondary': '#cbd5e1',
+        'text_light': '#94a3b8',
+        'text_white': '#ffffff',
+        
+        'border': '#475569',
+        'border_focus': '#60a5fa',
+        
+        'success': '#34d399',
+        'warning': '#fbbf24',
+        'error': '#f87171',
+        'info': '#60a5fa',
+    }
 }
 
 FONTS = {
@@ -43,6 +76,88 @@ FONTS = {
     'subtitle': ('Segoe UI', 13, 'bold'),
     'heading': ('Segoe UI', 11, 'bold'),
 }
+
+_current_theme = 'light'
+COLORS = THEMES[_current_theme]
+
+
+def load_theme_preference(db_manager):
+    """Load saved theme preference from database"""
+    global _current_theme, COLORS
+    try:
+        theme = db_manager.get_setting('theme', 'light')
+        _current_theme = theme
+        COLORS = THEMES[_current_theme]
+    except Exception:
+        pass
+
+
+def save_theme_preference(db_manager, theme):
+    """Save theme preference to database"""
+    try:
+        db_manager.set_setting('theme', theme)
+    except Exception:
+        pass
+
+
+def get_current_theme():
+    """Get current theme name"""
+    return _current_theme
+
+
+def set_theme(db_manager, theme_name):
+    """Change the current theme"""
+    global _current_theme, COLORS
+    if theme_name in THEMES:
+        _current_theme = theme_name
+        COLORS = THEMES[theme_name]
+        save_theme_preference(db_manager, theme_name)
+        return True
+    return False
+
+
+def apply_theme(root):
+    """Apply theme to existing window without restart"""
+    configure_styles(root)
+    
+    for widget in root.winfo_children():
+        _update_widget_colors(widget)
+        _update_treeview_tags(widget)
+
+
+def _update_treeview_tags(widget):
+    """Recursively update treeview tags"""
+    try:
+        if widget.winfo_class() == 'Treeview':
+            configure_treeview_tags(widget)
+        
+        for child in widget.winfo_children():
+            _update_treeview_tags(child)
+    except:
+        pass
+
+
+def _update_widget_colors(widget):
+    """Recursively update widget colors"""
+    try:
+        widget_type = widget.winfo_class()
+        
+        if widget_type in ('Frame', 'TFrame'):
+            widget.configure(background=COLORS['bg_primary'])
+        elif widget_type == 'Label':
+            widget.configure(bg=COLORS['bg_primary'], fg=COLORS['text_primary'])
+        
+        for child in widget.winfo_children():
+            _update_widget_colors(child)
+    except:
+        pass
+
+
+def apply_theme(root):
+    """Apply the current theme to all widgets"""
+    global COLORS
+    COLORS = THEMES[_current_theme]
+    configure_styles(root)
 
 
 def configure_styles(root):

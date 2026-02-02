@@ -39,8 +39,44 @@ class DatabaseManager:
             except Exception as e:
                 print(f"Erreur lors de l'initialisation de la base de données: {e}")
         
-        # Créer un utilisateur par défaut si aucun n'existe
+        self.create_settings_table()
         self.create_default_user()
+    
+    def create_settings_table(self):
+        try:
+            self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS app_settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            self.connection.commit()
+        except Exception as e:
+            print(f"Erreur lors de la création de la table settings: {e}")
+    
+    def get_setting(self, key, default=None):
+        try:
+            self.cursor.execute("SELECT value FROM app_settings WHERE key = ?", (key,))
+            result = self.cursor.fetchone()
+            return result[0] if result else default
+        except Exception:
+            return default
+    
+    def set_setting(self, key, value):
+        try:
+            self.cursor.execute("""
+                INSERT INTO app_settings (key, value, updated_at)
+                VALUES (?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(key) DO UPDATE SET 
+                    value = excluded.value,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (key, value))
+            self.connection.commit()
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la sauvegarde du paramètre: {e}")
+            return False
     
     def create_default_user(self):
         import hashlib
