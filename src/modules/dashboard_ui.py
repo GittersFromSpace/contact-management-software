@@ -90,11 +90,64 @@ class DashboardUI:
                                  relief="solid", borderwidth=1, highlightthickness=0)
             empty_card.pack(fill=tk.BOTH, expand=True)
             
-            empty_label = tk.Label(empty_card, text="Aucun rappel pour aujourd'hui", 
-                                  font=("Segoe UI", 11), bg=COLORS['bg_primary'], 
+            empty_label = tk.Label(empty_card, text="Aucun rappel pour aujourd'hui",
+                                  font=("Segoe UI", 11), bg=COLORS['bg_primary'],
                                   fg=COLORS['text_secondary'])
             empty_label.pack(expand=True, pady=40)
-    
+
+        # --- Rappels des 7 prochains jours ---
+        week_container = ttk.Frame(tab)
+        week_container.pack(fill=tk.BOTH, expand=True, pady=(10, 0))
+
+        ttk.Label(week_container, text="Rappels des 7 prochains jours", style="Subtitle.TLabel").pack(anchor=tk.W, pady=(0, 5))
+
+        rappels_week = self.rappel_mgr.get_rappels(traite=0, jours_futur=7)
+
+        if rappels_week:
+            week_card = tk.Frame(week_container, bg=COLORS['bg_primary'],
+                                 relief="solid", borderwidth=1, highlightthickness=0)
+            week_card.pack(fill=tk.BOTH, expand=True)
+
+            week_tree = ttk.Treeview(
+                week_card,
+                columns=("contact", "titre", "heure", "priorite"),
+                show="headings",
+                height=min(len(rappels_week), 8)
+            )
+
+            week_tree.heading("contact", text="Contact")
+            week_tree.heading("titre", text="Titre")
+            week_tree.heading("heure", text="Date/Heure")
+            week_tree.heading("priorite", text="Priorité")
+
+            week_tree.column("contact", width=200)
+            week_tree.column("titre", width=300)
+            week_tree.column("heure", width=150)
+            week_tree.column("priorite", width=100)
+
+            week_vsb = ttk.Scrollbar(week_card, orient="vertical", command=week_tree.yview)
+            week_tree.configure(yscrollcommand=week_vsb.set)
+
+            for rappel in rappels_week:
+                contact_name = f"{rappel['prenom']} {rappel['nom']}"
+                priority_display = self._get_priority_display(rappel['priorite'])
+                week_tree.insert("", "end", values=(
+                    contact_name,
+                    rappel['titre'],
+                    rappel['date_heure'],
+                    priority_display
+                ))
+
+            week_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=1, pady=1)
+            week_vsb.pack(side=tk.RIGHT, fill=tk.Y)
+        else:
+            empty_week = tk.Frame(week_container, bg=COLORS['bg_primary'],
+                                  relief="solid", borderwidth=1, highlightthickness=0)
+            empty_week.pack(fill=tk.BOTH, expand=True)
+            tk.Label(empty_week, text="Aucun rappel pour les 7 prochains jours",
+                     font=("Segoe UI", 11), bg=COLORS['bg_primary'],
+                     fg=COLORS['text_secondary']).pack(expand=True, pady=40)
+
     def _create_stat_card(self, parent, value, label, color):
         card = tk.Frame(parent, bg=COLORS['bg_primary'], relief="solid", 
                        borderwidth=1, highlightthickness=0)
