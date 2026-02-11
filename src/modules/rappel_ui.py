@@ -130,7 +130,18 @@ class RappelUI:
         btn.grid(row=9, column=0, pady=(18, 0), sticky="ew")
     
     def mark_rappel_done(self):
-        messagebox.showinfo("Info", "Fonctionnalité en développement", parent=self.root)
+        selected = self.rappels_tree.selection()
+        if not selected:
+            messagebox.showwarning("Sélection requise", "Veuillez sélectionner un rappel", parent=self.root)
+            return
+
+        item = self.rappels_tree.item(selected[0])
+        rappel_id = item['values'][0]
+
+        if self.rappel_mgr.marquer_traite(rappel_id):
+            self.load_rappels()
+        else:
+            messagebox.showerror("Erreur", "Erreur lors du traitement du rappel", parent=self.root)
     
     def load_rappels(self):
         if not self.rappels_tree:
