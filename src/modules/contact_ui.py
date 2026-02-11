@@ -14,6 +14,7 @@ class ContactUI:
         self.contact_mgr = contact_manager
         self.auth = auth_manager
         self.notebook = notebook
+        self.tab = None
         self.current_contact_id = None
         
     def create_main_interface(self, container):
@@ -109,8 +110,17 @@ class ContactUI:
         
         self.load_contacts()
         self.load_filter_options()
-        
+
+        self.tab = container
+        if self.notebook:
+            self.notebook.bind("<<NotebookTabChanged>>", self._on_tab_changed, add="+")
+
         return main_frame
+
+    def _on_tab_changed(self, event):
+        if self.notebook and self.tab and self.notebook.select() == str(self.tab):
+            self.load_contacts()
+            self.load_filter_options()
     
     def load_contacts(self, filters=None):
         for item in self.contacts_tree.get_children():
