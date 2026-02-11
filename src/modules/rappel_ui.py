@@ -70,7 +70,8 @@ class RappelUI:
         win.minsize(650, 550)
         win.minsize(520, 420)
         win.transient(self.root)
-        win.grab_set()
+        win.lift()
+        win.focus_force()
 
         frm = ttk.Frame(win, padding=24)
         frm.grid(row=0, column=0, sticky="nsew")

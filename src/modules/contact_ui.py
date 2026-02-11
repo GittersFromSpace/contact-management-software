@@ -9,10 +9,11 @@ import webbrowser
 class ContactUI:
     
     
-    def __init__(self, parent, contact_manager, auth_manager):
+    def __init__(self, parent, contact_manager, auth_manager, notebook=None):
         self.parent = parent
         self.contact_mgr = contact_manager
         self.auth = auth_manager
+        self.notebook = notebook
         self.current_contact_id = None
         
     def create_main_interface(self, container):
@@ -36,13 +37,15 @@ class ContactUI:
         
         ttk.Label(search_frame, text="Catégorie:").grid(row=1, column=0, sticky=tk.W, pady=(5, 0))
         self.categorie_var = tk.StringVar()
-        self.categorie_combo = ttk.Combobox(search_frame, textvariable=self.categorie_var, width=20)
+        self.categorie_combo = ttk.Combobox(search_frame, textvariable=self.categorie_var, width=20, state="readonly")
         self.categorie_combo.grid(row=1, column=1, padx=5, pady=(5, 0), sticky=tk.W)
-        
+        self.categorie_combo.bind("<<ComboboxSelected>>", lambda e: self.search_contacts())
+
         ttk.Label(search_frame, text="Ville:").grid(row=1, column=2, sticky=tk.W, pady=(5, 0))
         self.ville_var = tk.StringVar()
-        self.ville_combo = ttk.Combobox(search_frame, textvariable=self.ville_var, width=20)
+        self.ville_combo = ttk.Combobox(search_frame, textvariable=self.ville_var, width=20, state="readonly")
         self.ville_combo.grid(row=1, column=3, padx=5, pady=(5, 0), sticky=tk.W)
+        self.ville_combo.bind("<<ComboboxSelected>>", lambda e: self.search_contacts())
         
         
         button_frame = ttk.Frame(main_frame)
@@ -197,12 +200,12 @@ class ContactUI:
                 messagebox.showerror("Erreur", "Erreur lors de la suppression du contact", parent=self.parent)
     
     def view_contact_details(self):
-        
+
         contact_id = self.get_selected_contact_id()
         if not contact_id:
             messagebox.showwarning("Sélection requise", "Veuillez sélectionner un contact", parent=self.parent)
             return
-        
+
         self.open_contact_details_window(contact_id)
     
     def open_contact_form_window(self, contact_id=None):
@@ -211,6 +214,9 @@ class ContactUI:
         window.title("Nouveau contact" if not contact_id else "Modifier le contact")
         window.geometry("1100x900")
         window.minsize(1000, 800)
+        window.transient(self.parent)
+        window.lift()
+        window.focus_force()
         
         
         contact_data = self.contact_mgr.get_contact(contact_id) if contact_id else {}
@@ -587,6 +593,9 @@ class ContactUI:
         window.title(f"Fiche contact - {contact.get('prenom', '')} {contact.get('nom', '')}")
         window.geometry("1000x800")
         window.minsize(900, 700)
+        window.transient(self.parent)
+        window.lift()
+        window.focus_force()
         
         
         main_frame = ttk.Frame(window, padding=10)
@@ -851,9 +860,9 @@ SITE WEB
                 messagebox.showerror("Erreur", f"Erreur lors de l'export: {str(e)}", parent=self.parent)
     
     def quick_add_interaction(self, contact_id):
-        
-        messagebox.showinfo("Info", "Utilisez l'onglet Interactions pour ajouter une interaction", parent=self.parent)
-    
+        if self.notebook:
+            self.notebook.select(2)
+
     def quick_add_rappel(self, contact_id):
-        
-        messagebox.showinfo("Info", "Utilisez l'onglet Rappels pour ajouter un rappel", parent=self.parent)
+        if self.notebook:
+            self.notebook.select(3)

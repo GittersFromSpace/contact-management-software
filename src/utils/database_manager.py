@@ -103,7 +103,7 @@ class DatabaseManager:
                 self.cursor.execute(query, params)
             else:
                 self.cursor.execute(query)
-            return self.cursor.fetchall()
+            return [dict(row) for row in self.cursor.fetchall()]
         except sqlite3.Error as e:
             print(f"Erreur d'exécution de la requête: {e}")
             return None

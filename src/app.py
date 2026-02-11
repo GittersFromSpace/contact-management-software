@@ -205,7 +205,7 @@ class MainApplication:
         
         contact_tab = ttk.Frame(self.notebook)
         self.notebook.add(contact_tab, text="Contacts")
-        contact_ui = ContactUI(self.root, self.contact_mgr, self.auth)
+        contact_ui = ContactUI(self.root, self.contact_mgr, self.auth, self.notebook)
         contact_ui.create_main_interface(contact_tab)
         
         self.interaction_ui.create_interactions_tab(self.notebook)

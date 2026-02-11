@@ -91,7 +91,8 @@ class ProjetUI:
         win.minsize(600, 440)
         win.minsize(480, 260)
         win.transient(self.root)
-        win.grab_set()
+        win.lift()
+        win.focus_force()
 
         frm = ttk.Frame(win, padding=24)
         frm.grid(row=0, column=0, sticky="nsew")
@@ -142,6 +143,7 @@ class ProjetUI:
             if projet_id:
                 messagebox.showinfo("Succès", "Projet créé", parent=win)
                 win.destroy()
+                self.load_projets()
             else:
                 messagebox.showerror("Erreur", "Erreur lors de la création du projet", parent=win)
 
@@ -251,7 +253,9 @@ class ProjetUI:
         win.geometry("1050x800")
         win.minsize(900, 700)
         win.transient(self.root)
-        
+        win.lift()
+        win.focus_force()
+
         main_frame = ttk.Frame(win, padding=10)
         main_frame.pack(fill=tk.BOTH, expand=True)
         
@@ -394,8 +398,9 @@ class ProjetUI:
         win.title("Ajouter une tâche au projet")
         win.geometry("600x400")
         win.transient(parent_win)
-        win.grab_set()
-        
+        win.lift()
+        win.focus_force()
+
         frm = ttk.Frame(win, padding=20)
         frm.pack(fill=tk.BOTH, expand=True)
         

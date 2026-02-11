@@ -313,6 +313,8 @@ def configure_styles(root):
     style.map("TCombobox",
              fieldbackground=[('readonly', COLORS['bg_primary'])],
              selectbackground=[('readonly', COLORS['bg_primary'])],
+             selectforeground=[('readonly', COLORS['text_primary'])],
+             foreground=[('readonly', COLORS['text_primary'])],
              bordercolor=[('focus', COLORS['border_focus'])])
     
     style.configure("TNotebook",

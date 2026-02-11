@@ -156,6 +156,8 @@ class TagRelationUI:
         win.minsize(420, 260)
         win.minsize(340, 180)
         win.transient(self.root)
+        win.lift()
+        win.focus_force()
         win.grab_set()
 
         frm = ttk.Frame(win, padding=24)
@@ -183,6 +185,7 @@ class TagRelationUI:
             if tag_id:
                 messagebox.showinfo("Succès", "Tag créé", parent=win)
                 win.destroy()
+                self.load_tags()
             else:
                 messagebox.showerror("Erreur", "Ce tag existe déjà", parent=win)
 
@@ -250,11 +253,13 @@ class TagRelationUI:
         win.title(f"Assigner le tag '{tag_nom}' à des contacts")
         win.geometry("600x450")
         win.transient(self.root)
+        win.lift()
+        win.focus_force()
         win.grab_set()
-        
+
         frm = ttk.Frame(win, padding=20)
         frm.pack(fill=tk.BOTH, expand=True)
-        
+
         ttk.Label(frm, text=f"Sélectionnez les contacts pour le tag '{tag_nom}'", font=("", 12, "bold")).pack(pady=(0, 10))
         
         listbox_frame = ttk.Frame(frm)
@@ -324,6 +329,8 @@ class TagRelationUI:
         win.title(f"Résultats de recherche - {len(contacts)} contact(s)")
         win.geometry("700x500")
         win.transient(self.root)
+        win.lift()
+        win.focus_force()
         
         frm = ttk.Frame(win, padding=20)
         frm.pack(fill=tk.BOTH, expand=True)
@@ -418,6 +425,8 @@ class TagRelationUI:
         win.title("Vue en arbre hiérarchique des relations")
         win.geometry("800x600")
         win.transient(self.root)
+        win.lift()
+        win.focus_force()
         
         frm = ttk.Frame(win, padding=20)
         frm.pack(fill=tk.BOTH, expand=True)
@@ -474,6 +483,8 @@ class TagRelationUI:
         win.title("Graphe réseau des relations")
         win.geometry("900x700")
         win.transient(self.root)
+        win.lift()
+        win.focus_force()
         
         frm = ttk.Frame(win, padding=10)
         frm.pack(fill=tk.BOTH, expand=True)
@@ -539,7 +550,8 @@ class TagRelationUI:
         win.minsize(600, 400)
         win.minsize(480, 260)
         win.transient(self.root)
-        win.grab_set()
+        win.lift()
+        win.focus_force()
 
         frm = ttk.Frame(win, padding=24)
         frm.grid(row=0, column=0, sticky="nsew")
@@ -593,6 +605,7 @@ class TagRelationUI:
             if rel_id:
                 messagebox.showinfo("Succès", "Relation créée", parent=win)
                 win.destroy()
+                self.load_relations()
             else:
                 messagebox.showerror("Erreur", "Erreur lors de la création de la relation", parent=win)
 
