@@ -186,7 +186,7 @@ class RappelManager:
             params.append(traite)
         
         if jours_futur:
-            query += " AND DATE(r.date_heure) <= DATE('now', ?)"
+            query += " AND DATE(r.date_heure) >= DATE('now') AND DATE(r.date_heure) <= DATE('now', ?)"
             params.append(f'+{jours_futur} days')
         
         query += " ORDER BY r.date_heure ASC"
